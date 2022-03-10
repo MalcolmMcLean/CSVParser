@@ -582,16 +582,17 @@ static char *loadquote(FILE *fp)
       answer[N++] = (char) ch;
     else
     {
-      ch2 = fgetc(fp);
-      if(ch2 == '"')
-        answer[N++] = '"';
-      else
-      {
-        ungetc(ch2, fp);
-        break;
-      }
-      if(N == len -2)
-      {
+        ch2 = fgetc(fp);
+        if (ch2 == '"')
+            answer[N++] = '"';
+        else
+        {
+            ungetc(ch2, fp);
+            break;
+        }
+    }
+    if(N == len -2)
+    {
         temp = realloc(answer, len + 128);
         if(!temp)
         {
@@ -599,8 +600,8 @@ static char *loadquote(FILE *fp)
           return 0;
         }
         len += 128;
-      }
     }
+    
   }
 
   answer[N] = 0;
