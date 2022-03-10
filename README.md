@@ -21,42 +21,46 @@ CSV files.
 | Jill Jones | 28000.0 | 1236 |
 
 ```
+
+#include <stdio.h>
 #include "csv.h"
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
     int datatype[100];
-    CSV *csv = loadcsv(argv[1]);
+    CSV* csv = loadcsv(argv[1]);
     int i, j;
-    
+
     int Nrows, Ncolumns;
-    csv_getsize(csv, &Ncolumns, & Nrows);
-    for (i =0; i < Ncolumns; i++)
+    csv_getsize(csv, &Ncolumns, &Nrows);
+    for (i = 0; i < Ncolumns; i++)
     {
-       const char *columname = csv_getcolumn(csv, i, &datatype[i]);
-       printf("Column %d name %s datatype %d\n", i, columnname, datatype[i]);
+        const char* columnname = csv_column(csv, i, &datatype[i]);
+        printf("Column %d name %s datatype %d\n", i, columnname, datatype[i]);
     }
-    for (i =0; i < Nrows; i++)
+    for (i = 0; i < Nrows; i++)
     {
-       for (j =0; j < Ncolumns; j++)
-       {
-          double value;
-          const char *str;
-          if (datatype[j] == CSV_REAL && csv_hasdata(csv, j, i))
-          {
-              value = csv_get(csv, j, i);
-              printf("%f, ", value);
-          }
-          else if (datatype[j] == CSV_STRING && csv_hasdata(csv, j, i))
-          {
-             str = csv_getstr(csv, j, i);
-             printf("\"%s\", ", str);
-          }
-       }
+        for (j = 0; j < Ncolumns; j++)
+        {
+            double value;
+            const char* str;
+            if (datatype[j] == CSV_REAL && csv_hasdata(csv, j, i))
+            {
+                value = csv_get(csv, j, i);
+                printf("%f, ", value);
+            }
+            else if (datatype[j] == CSV_STRING && csv_hasdata(csv, j, i))
+            {
+                str = csv_getstr(csv, j, i);
+                printf("\"%s\", ", str);
+            }
+        }
     }
-    
+
     killcsv(csv);
-    
+
     return 0;
 }
+
+
 ```
