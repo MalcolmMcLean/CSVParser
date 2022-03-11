@@ -54,6 +54,7 @@ CSV *loadcsv(const char *fname)
   if(!fp)
     return 0;
 
+
   /* load each row of the csv data */
   do
   {
@@ -70,6 +71,7 @@ CSV *loadcsv(const char *fname)
   while(!ferror(fp));
   
   fclose(fp);
+
   
   /* csv file may contain lines of the wrong length.
      Assume the first line contains the right number of columns.
@@ -599,6 +601,7 @@ static char *loadquote(FILE *fp)
           free(answer);
           return 0;
         }
+        answer = temp;
         len += 128;
     }
     
